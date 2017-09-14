@@ -41,6 +41,7 @@
     "pretest": "npm run test:clean && npm run lint",
     "test:clean": "rimraf ./coverage",
     "test": "cross-env NODE_ENV=test jest --coverage",
+    "test:1": "node ./node_modules/jest-single-file-coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
@@ -276,6 +277,7 @@
     "image-webpack-loader": "2.0.0",
     "imports-loader": "0.6.5",
     "jest-cli": "18.0.0",
+    "jest-single-file-coverage": "^1.0.2",
     "lint-staged": "3.2.1",
     "ngrok": "2.2.4",
     "node-plop": "0.5.4",
