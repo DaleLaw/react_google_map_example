@@ -1,24 +1,32 @@
 /*
  * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a necessity for you then you can refactor it and remove
- * the linting exception.
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import styled from 'styled-components';
+import Map from 'components/Map';
+import SideMenu from 'components/SideMenu';
+import connectGoogleMap from './connectGoogleMap';
 
-export default class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export const Container = styled.div`
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+`;
+
+export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <Container>
+        <SideMenu />
+        <Map
+          center={{ lat: 22.2896868, lng: 114.19389 }}
+          {...this.props}
+        />
+      </Container>
     );
   }
 }
+
+export default connectGoogleMap(HomePage);
