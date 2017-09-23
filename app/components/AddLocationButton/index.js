@@ -17,6 +17,7 @@ export const Button = styled.button`
   }
   transition-duration: 0.4s;
   cursor: pointer;
+  outline: none;
 `;
 
 const AddLocationButton = (props) => (

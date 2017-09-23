@@ -27,9 +27,9 @@ export const RemoveButton = styled.button`
   }
 `;
 
-const StyledGeosuggest = styled(Geosuggest)`
+export const StyledGeosuggest = styled(Geosuggest)`
   display: inline-block;
-  width: calc(100% - 44px);
+  width: ${(props) => props.rightButtonVisible ? 'calc(100% - 44px)' : '100%'};
 
   & input {
     vertical-align: center;
@@ -37,7 +37,7 @@ const StyledGeosuggest = styled(Geosuggest)`
     height: 44px;
     line-height: 44px; 
     padding: 0 12px;
-    fontSize: 14px;
+    fontSize: 12px;
     textOverflow: ellipses;
     outline: none;
   }
@@ -78,25 +78,42 @@ class LocationSearchBox extends React.PureComponent { // eslint-disable-line rea
     placeholder: PropTypes.string.isRequired,
     location: PropTypes.object.isRequired,
     onClickRemove: PropTypes.func.isRequired,
+    removable: PropTypes.bool.isRequired,
+    value: PropTypes.string,
+  }
+
+  static defaultProps = {
+    value: undefined,
+  }
+
+  onClickRemove = () => {
+    this.geosuggest.clear();
+    this.props.onClickRemove();
   }
 
   render() {
-    const { onSuggestSelect, placeholder, location, onClickRemove } = this.props;
+    const { onSuggestSelect, placeholder, location, removable, value } = this.props;
     return (
       <Wrapper>
         <StyledGeosuggest
-          type={'text'}
+          initialValue={value}
           placeholder={placeholder}
           onSuggestSelect={onSuggestSelect}
           location={location}
+          rightButtonVisible={removable}
           radius="20"
+          innerRef={(el) => {
+            this.geosuggest = el;
+          }}
         />
-        <RemoveButton
-          title={'Remove Location'}
-          onClick={() => onClickRemove()}
-        >
-          X
-        </RemoveButton>
+        { removable ?
+          <RemoveButton
+            title={'Remove Location'}
+            onClick={this.onClickRemove}
+          >
+            X
+          </RemoveButton> : null
+        }
       </Wrapper>
     );
   }

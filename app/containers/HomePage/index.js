@@ -3,23 +3,53 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import Map from 'components/Map';
 import SideMenu from 'components/SideMenu';
 import connectGoogleMap from './connectGoogleMap';
+import { makeSelectLocations, makeSelectRoute } from './selectors';
+import { addLocation, selectLocation, removeLocation } from './actions';
 
 export const Container = styled.div`
   position: absolute;
   display: inline-block;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 `;
 
-export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
+export class HomePage extends React.PureComponent {
+  static propTypes = {
+    locations: PropTypes.array.isRequired,
+    addLocation: PropTypes.func.isRequired,
+    removeLocation: PropTypes.func.isRequired,
+    selectLocation: PropTypes.func.isRequired,
+  }
+  onClickAddLocation = () => {
+    this.props.addLocation();
+  }
+
+  onSuggestSelect = (index, location) => {
+    this.props.selectLocation(index, location);
+  }
+
+  onClickRemove = (index) => {
+    this.props.removeLocation(index);
+  }
+
   render() {
+    const { locations } = this.props;
     return (
       <Container>
-        <SideMenu />
+        <SideMenu
+          onClickAddLocation={this.onClickAddLocation}
+          onSuggestSelect={this.onSuggestSelect}
+          onClickRemove={this.onClickRemove}
+          locations={locations}
+        />
         <Map
           center={{ lat: 22.2896868, lng: 114.19389 }}
           {...this.props}
@@ -29,4 +59,16 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 }
 
-export default connectGoogleMap(HomePage);
+export const mapStateToProps = createStructuredSelector({
+  locations: makeSelectLocations(),
+  route: makeSelectRoute(),
+});
+
+export const mapDispatchToProps = (dispatch) => ({
+  dispatch,
+  addLocation: () => dispatch(addLocation()),
+  selectLocation: (i, location) => dispatch(selectLocation(i, location)),
+  removeLocation: (i) => dispatch(removeLocation(i)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(connectGoogleMap(HomePage));
