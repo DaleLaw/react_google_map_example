@@ -28,8 +28,6 @@ function* submitLocationsAndGetRoute() {
       const data = locations.map((l) => [`${l.location.lat}`, `${l.location.lng}`]);
       const response = yield autoRetry(call(submitLocations, data));
       const response2 = yield autoRetry(call(getRoute, response.token));
-      console.log('response2')
-      console.log(response2)
       if (response2.status === 'success') {
         yield put(getRouteSuccess(response.token, response2.path, response2.total_distance, response2.total_time));
       } else {
