@@ -2,7 +2,7 @@ This repository is demo of React + Google Map Route Planner.
 It takes user input of pickup location and drop-off locations. Then send the location data to a mock Server to get the shortest path and display that path on a Google Map.
 
 # Screenshot
-![Scrrenshot](https://github.com/DaleLaw/react_google_map_example/screenshot.png)
+![Screenshot](https://github.com/DaleLaw/react_google_map_example/blob/master/screenshot.png)
 
 # Features
 - Adress search based on Geosuggest
