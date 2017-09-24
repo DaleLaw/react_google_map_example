@@ -17,6 +17,10 @@ const makeSelectRoute = () => createSelector(
   selectAppDomain(),
   (substate) => substate.get('route').toJS(),
 );
+const makeSelectError = () => createSelector(
+  selectAppDomain(),
+  (substate) => substate.get('error'),
+);
 
 /**
  * Default selector used by HomePage
@@ -32,4 +36,5 @@ export {
   selectAppDomain,
   makeSelectLocations,
   makeSelectRoute,
+  makeSelectError,
 };

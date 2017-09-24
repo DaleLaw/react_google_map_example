@@ -12,7 +12,7 @@ function getRandomInt(min, max) {
 }
 
 function delay(sec) {
-	return new Promise(r => setTimeout(r, sec * 1000))
+	return new Promise(r => setTimeout(r, sec * 200))
 }
 
 router.post('/route', function* () {

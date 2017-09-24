@@ -14,12 +14,21 @@ export const Menu = styled.div`
   overflow: scroll;
 `;
 
+const Message = styled.span`
+  display: block;
+  text-align: center;
+  font-size: 14px;
+  padding: 8px;
+  color: red;
+`;
+
 class SideMenu extends React.Component { // eslint-disable-line react/prefer-stateless-function
   static propTypes = {
     onClickAddLocation: PropTypes.func.isRequired,
     onSuggestSelect: PropTypes.func.isRequired,
     onClickRemove: PropTypes.func.isRequired,
     locations: PropTypes.array.isRequired,
+    message: PropTypes.string,
   }
 
   renderSearchBox = (item, i) => {
@@ -50,11 +59,12 @@ class SideMenu extends React.Component { // eslint-disable-line react/prefer-sta
   }
 
   render() {
-    const { onClickAddLocation, locations } = this.props;
+    const { onClickAddLocation, locations, message } = this.props;
     return (
       <Menu>
         <AddLocationButton onClick={onClickAddLocation} />
         { locations.map(this.renderSearchBox) }
+        <Message>{message}</Message>
       </Menu>
     );
   }

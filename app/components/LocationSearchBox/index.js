@@ -10,8 +10,8 @@ export const Wrapper = styled.div`
   width: 240px;
   height: 44px;
   margin: 8px auto 8px auto;
-  borderRadius: 3px;
-  boxShadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 `;
 
 export const RemoveButton = styled.button`
@@ -67,7 +67,7 @@ export const StyledGeosuggest = styled(Geosuggest)`
 
   & .geosuggest__item:hover {
     background-color: #008CBA;
-    color: white
+    color: white;
     transition-duration: 0.4s;
   }
 `;

@@ -15,6 +15,8 @@ describe('<HomePage />', () => {
       onClickRemove={mockRemoveLocation}
       selectLocation={mockSelectLocation}
       locations={[null, null, null]}
+      route={{}}
+      error={null}
       {...props}
     />
   );

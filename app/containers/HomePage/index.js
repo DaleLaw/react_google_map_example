@@ -10,7 +10,7 @@ import { createStructuredSelector } from 'reselect';
 import Map from 'components/Map';
 import SideMenu from 'components/SideMenu';
 import connectGoogleMap from './connectGoogleMap';
-import { makeSelectLocations, makeSelectRoute } from './selectors';
+import { makeSelectLocations, makeSelectRoute, makeSelectError } from './selectors';
 import { addLocation, selectLocation, removeLocation } from './actions';
 
 export const Container = styled.div`
@@ -24,6 +24,8 @@ export const Container = styled.div`
 export class HomePage extends React.PureComponent {
   static propTypes = {
     locations: PropTypes.array.isRequired,
+    route: PropTypes.object.isRequired,
+    error: PropTypes.string,
     addLocation: PropTypes.func.isRequired,
     removeLocation: PropTypes.func.isRequired,
     selectLocation: PropTypes.func.isRequired,
@@ -41,7 +43,7 @@ export class HomePage extends React.PureComponent {
   }
 
   render() {
-    const { locations } = this.props;
+    const { locations, route, error } = this.props;
     return (
       <Container>
         <SideMenu
@@ -49,9 +51,12 @@ export class HomePage extends React.PureComponent {
           onSuggestSelect={this.onSuggestSelect}
           onClickRemove={this.onClickRemove}
           locations={locations}
+          message={error}
         />
         <Map
           center={{ lat: 22.2896868, lng: 114.19389 }}
+          locations={locations}
+          path={route.path}
           {...this.props}
         />
       </Container>
@@ -62,6 +67,7 @@ export class HomePage extends React.PureComponent {
 export const mapStateToProps = createStructuredSelector({
   locations: makeSelectLocations(),
   route: makeSelectRoute(),
+  error: makeSelectError(),
 });
 
 export const mapDispatchToProps = (dispatch) => ({
